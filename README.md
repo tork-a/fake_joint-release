@@ -1,81 +1,87 @@
-# fake_joint [![Build Status](https://travis-ci.org/tork-a/fake_joint.svg?branch=master)](https://travis-ci.org/tork-a/fake_joint)
+# fake_joint_driver
 
-## What is this?
+This package contains a node to provide
+`hardware_interface::PositionJointInterface`, which simply loopback
+the command joint position to the actual position. In other words, it
+is faking a perfect joint controller. It can be used from
+ros_controllers such as JointTrajectoryController. You can check your
+own joint trajectories on rviz, without using Gazebo or others.
 
-This repositry contains the packages for simulating 'fake' (i.e. dummy
-or loop-back) joint driver for the
-[ros_control](https://github.com/ros-controls/ros_control) framework.
+![Screenshot](doc/fake_joint_driver.png)
 
-## Why we need this?
+# Quick start
 
-You may know MoveIt! has own controller manager and
-`moveit_fake_controller` to simulate the robot motion. However, the
-interface and code are different from `ros_control` framework. We have
-experienced our [jog_control](https://github.com/tork-a/jog_control)
-package doesn't work with moveit_fake_controller while it works fine
-with ros_control. One solution is to make 'fake' joint driver for
-ros_control and not to use moveit_fake_controller.
+## launch the nodes
 
-You can simulate the joint controller using gazebo plugin. However,
-sometimes it is overkill for the purpose. Gazebo is rather CPU
-consuming for powerless PC or CI environments. And not all of the
-robot support gazebo model.
-
-When some problems occured, say in MoveIt!, it could be difficult to
-know whether the problem is from MoveIt! setting or joint controller
-parameters. `fake_joint` guarantees the controller works perfectly,
-means it simulates the precice motion as commended. This package
-eliminates the possibility of controller side in your debugging.
-
-## Quick start
-
-'fake_joint_launch' contains some launch and config files for several
-robots. You can easily try this package. They simulate real robot
-interface like joint trajectory action, so you can use MoveIt! on it.
-
-### UR3/UR5
-
-![UR5 fake_joint](image/ur5_fake.png)
-
-To use just fake driver and rqt plugin:
+On one terminal, do:
 
 ```
-$ roslaunch fake_joint_launch ur3.launch use_rqt:=true
+$ roslaunch fake_joint_driver fake-joint-driver.test
 ```
 
-To use fake driver and MoveIt!:
+This launch file does:
+
+1. Loading robot description of simple 3-DOF arm in robot/arm3.urdf.xacro
+2. Launching fake_joint_driver_node and robot_state_publisher
+3. Launching controller manager to spawn ros_controllers (joint_state_controller and joint_trajecotry_controller)
+
+## See the robot in rviz 
+
+On another terminal, do:
 
 ```
-$ roslaunch fake_joint_launch ur3.launch use_rviz:=false
-$ roslaunch ur3_moveit_config ur3_moveit_planning_execution.launch sim:=true
-$ roslaunch ur3_moveit_config moveit_rviz.launch config:=true
+$ rviz
 ```
+Add robot model to see the robot.
 
-### TRA1
+## Set trajectory with rqt_joint_trajectory_controller
 
-![TRA1 fake_joint](image/tra1_fake.png)
-
-To use just fake driver and rqt plugin:
+On another terminal, do:
 
 ```
-$ roslaunch fake_joint_launch tra1.launch use_rqt:=true
+$ rqt
 ```
 
-To use fake driver and MoveIt!:
+Choose Plugins->Robot tools->Joint trajectory controller to load the
+plugin.  Select controller manager and controller, then you can see
+sliders to set the joint trajectory goals.
 
-```
-$ roslaunch fake_joint_launch tra1.launch use_rviz:=false
-$ roslaunch tra1_bringup tra1_moveit.launch
-```
+# Parameters
 
-### PR2
+- `use_robot_description`
 
-![PR2 fake_joint](image/pr2_fake.png)
+  When it is true, the driver read the parameter `/robot_description`
+  to obtain the joint list to control by this driver. When it is
+  false, you must specify the joint list by `include_joints`
+  parameters.
 
-To use just fake driver and rqt plugin:
+- `include_joints`
 
-```
-$ roslaunch fake_joint_launch pr2.launch use_rqt:=true
-```
+  This is the list of the joints which the driver node should control.
 
-I can't find MoveIt! files for actual robot :-(
+- `exclude_joints`
+
+  This is the list of the joints which the driver node should not
+  control.
+
+- `start_position`
+
+  This is a map to specify the initial position of the joint. You can
+  use this to avoid collision in zero joint angle.
+  
+  Use like:
+  
+  ```
+  <!-- fake_joint_driver_node -->
+  <node name="fake_joint_driver" pkg="fake_joint_driver" type="fake_joint_driver_node">
+    <!-- Set joint start position -->
+    <rosparam param="start_position">{LARM_JOINT2: -1.7, RARM_JOINT2: -1.7}</rosparam>
+  </node>
+  ```
+
+# Caution
+
+You can set target joints for joint_trajectory_controller in the
+config/controllers.yaml.  Note somehow you cannot see any controllers
+and joints in rqt_joint_trajectory_controller if any joints have no
+joint position limits in URDF file. It is easy to be trapped.

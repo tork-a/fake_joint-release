@@ -1,0 +1,12 @@
+Source: ros-melodic-fake-joint-launch
+Section: misc
+Priority: optional
+Maintainer: Tokyo Opensource Robotics Kyokai (TORK) Developer Team <dev@opensource-robotics.tokyo.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-melodic-catkin, ros-melodic-fake-joint-driver, ros-melodic-roslaunch, ros-melodic-rostest
+Homepage: http://wiki.ros.org/fake_joint_launch
+Standards-Version: 3.9.2
+
+Package: ros-melodic-fake-joint-launch
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-melodic-abb-irb2400-support, ros-melodic-controller-manager, ros-melodic-fake-joint-driver, ros-melodic-pr2-description, ros-melodic-robot-state-publisher, ros-melodic-roslaunch, ros-melodic-rostest, ros-melodic-rviz
+Description: Collection of the launch files for fake_joint_driver.

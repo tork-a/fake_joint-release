@@ -1,0 +1,28 @@
+ros-melodic-fake-joint-driver (0.0.4-1bionic) bionic; urgency=high
+
+
+
+ -- Tokyo Opensource Robotics Kyokai (TORK) Developer Team <dev@opensource-robotics.tokyo.jp>  Tue, 17 Dec 2019 15:00:00 -0000
+
+ros-melodic-fake-joint-driver (0.0.3-1bionic) bionic; urgency=high
+
+  * Add start_position parameter(#3 <https://github.com/tork-a/fake_joint/issues/3>)
+  * 0.0.2
+  * Add fake_joint meta-package
+  * Contributors: Ryosuke Tajima
+
+ -- Tokyo Opensource Robotics Kyokai (TORK) Developer Team <dev@opensource-robotics.tokyo.jp>  Thu, 30 Aug 2018 15:00:00 -0000
+
+ros-melodic-fake-joint-driver (0.0.1-1bionic) bionic; urgency=high
+
+  * Add copyright to source files
+  * Eliminate xacro warning
+  * Add README and image
+  * Add vs060 settings
+  * Add travis badge
+  * Add launch and re-organize the package
+  * Contributors: Ryosuke Tajima
+
+ -- Tokyo Opensource Robotics Kyokai (TORK) Developer Team <dev@opensource-robotics.tokyo.jp>  Wed, 15 Aug 2018 15:00:00 -0000
+
+

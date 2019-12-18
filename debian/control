@@ -1,0 +1,12 @@
+Source: ros-melodic-fake-joint
+Section: misc
+Priority: optional
+Maintainer: Tokyo Opensource Robotics Kyokai (TORK) Developer Team <dev@opensource-robotics.tokyo.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-melodic-catkin
+Homepage: http://wiki.ros.org/fake_joint
+Standards-Version: 3.9.2
+
+Package: ros-melodic-fake-joint
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-melodic-fake-joint-driver, ros-melodic-fake-joint-launch
+Description: This metapackage depends on fake-joint related package for ros_control.

@@ -1,0 +1,12 @@
+Source: ros-melodic-fake-joint-driver
+Section: misc
+Priority: optional
+Maintainer: Tokyo Opensource Robotics Kyokai (TORK) Developer Team <dev@opensource-robotics.tokyo.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-melodic-catkin, ros-melodic-controller-manager, ros-melodic-hardware-interface, ros-melodic-roscpp, ros-melodic-roslaunch, ros-melodic-roslint, ros-melodic-rostest, ros-melodic-urdf, ros-melodic-xacro
+Homepage: http://wiki.ros.org/fake_joint_driver
+Standards-Version: 3.9.2
+
+Package: ros-melodic-fake-joint-driver
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-melodic-controller-manager, ros-melodic-hardware-interface, ros-melodic-joint-state-controller, ros-melodic-joint-trajectory-controller, ros-melodic-position-controllers, ros-melodic-robot-state-publisher, ros-melodic-roscpp, ros-melodic-roslaunch, ros-melodic-urdf, ros-melodic-xacro
+Description: The fake_joint_driver package
